@@ -1,25 +1,21 @@
 ﻿using System;
-using System.Linq;
 
 public class Matrix
 {
     private int[] _elements;
-    public int Size { get; }
+    public int Size
+    {
+        get => _elements.Length;
+    }
 
     public Matrix (params int[] elements)
     {
-        if (elements == null)
+        var size = elements == null ? 0 : elements.Length;
+
+        _elements = new int[size];
+        for (var i = 0; i < Size; i++)
         {
-            Size = 0;
-        }
-        else
-        {
-            Size = elements.Length;
-            _elements = new int[Size];
-            for (var i = 0; i < Size; i++)
-            {
-                _elements[i] = elements[i];
-            }
+           _elements[i] = elements[i];
         }
     }
 
@@ -36,13 +32,28 @@ public class Matrix
                 return _elements[i];
             }
         }
+        set
+        {
+            if(i==j)
+            {
+                _elements[i] = value;
+            }
+        }
     }
 
-    public int Track() => _elements.Sum();
+    public int Track()
+    {
+        var sum = 0;
+        for(var i = 0; i < Size; i++)
+        {
+            sum += _elements[i];
+        }
+        return sum;
+    }
 
     public override bool Equals(object obj)
     {
-        if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+        if ((obj == null) || this is not Matrix || obj is not Matrix)
         {
             return false;
         }
@@ -67,28 +78,33 @@ public class Matrix
 
     public override int GetHashCode()
     {
-        return this.ToString().GetHashCode();
+        var str = "";
+        for (var i = 0; i < Size; i++)
+        {
+            str += _elements[i].ToString();
+        }
+        return str.GetHashCode();
     }
 
     public override string ToString()
     {
         string str = "";
-
-        for (int i=0;i<Size;i++)
-        {
-            for(int j=0;j<Size;j++)
+            for (var i = 0; i < Size; i++)
             {
-                if (i != j)
+                for (var j = 0; j < Size; j++)
                 {
-                    str += string.Format("{0,5:D}", 0);
+                    if (i != j)
+                    {
+                        str += $"{0,5:D}";
                 }
-                else
-                {
-                    str += string.Format("{0,5:D}", _elements[i]);
+                    else
+                    {
+                        str += $"{_elements[i],5:D}";
+                    }
                 }
+                str += "\n";
             }
-            str += "\n";
-        }
+        
         return str;
     }
 

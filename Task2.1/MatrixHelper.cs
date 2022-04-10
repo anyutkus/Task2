@@ -10,7 +10,7 @@ public static class MatrixHelper
         var maxSize = Math.Max(m1.Size, m2.Size);
         var newArray = new int[maxSize];
 
-        for (int i = 0; i < maxSize; i++)
+        for (var i = 0; i < maxSize; i++)
         {
             newArray[i] = m1[i, i] + m2[i, i];
         }
