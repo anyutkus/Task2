@@ -1,4 +1,4 @@
-﻿public abstract class Lesson : BasicItem
+﻿public class Lesson : BasicItem
 {
     
 }
